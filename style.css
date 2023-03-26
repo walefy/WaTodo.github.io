@@ -1,0 +1,87 @@
+body {
+  background-color: #282a36;
+  color: #8be9fd;
+}
+
+h1 {
+  text-align: center;
+}
+
+#todo-form {
+  text-align: center;
+}
+
+/* main {
+  background-color: #44475a;
+  min-height: 300px;
+  width: 50%;
+  padding: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 10px;
+  overflow-x: hidden;
+} */
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+}
+
+#ul-container {
+  background-color: #44475a;
+  min-height: 300px;
+  width: 80%;
+  height: 80%;
+  margin-top: 60px;
+  border-radius: 20px;
+  overflow-x: auto;
+}
+
+#list-of-todo {
+  list-style: none;
+  padding: 10px;
+}
+
+#list-of-todo li {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  word-break: break-all;
+}
+
+#list-of-todo li input[type="checkbox"] {
+  transform: scale(2);
+}
+
+#todo-form input[type="text"] {
+  box-sizing: border-box;
+  width: 50%; /* Define a largura como 50% do elemento pai */
+  font-size: 16px; /* Define o tamanho da fonte como 16px */
+  border-radius: 8px;
+  padding: 12px 24px;
+  margin: none;
+}
+
+/* #todo-form input[type="submit"] {
+  box-sizing: border-box;
+  width: 20%;
+  font-size: 16px;
+  background-color: #50fa7b;
+} */
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  border: none;
+  color: #fff;
+  padding: 12px 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}

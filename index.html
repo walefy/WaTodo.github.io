@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>todo list</title>
+</head>
+
+<body>
+  <header>
+    <h1>TODO List</h1>
+  </header>
+  <main>
+    <section>
+      <form action="" method="get" id="todo-form">
+        <label for="GET-todo">Task:</label>
+        <input type="text" name="todo" id="GET-todo" maxlength="80" autocomplete="off">
+        <!-- <input type="button" value="submit" id="btn-submit"> -->
+        <input type="submit" value="submit">
+      </form>
+    </section>
+    <div id="ul-container">
+      <section>
+        <ul id="list-of-todo"></ul>
+      </section>
+    </div>
+  </main>
+  <script src="./script.js"></script>
+</body>
+
+</html>
