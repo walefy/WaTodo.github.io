@@ -12,8 +12,8 @@ formTodo.addEventListener('submit', (event) => {
   if (listOfTodo.includes(todo.value)) return;
   if (todo.value.trim() === '') {
     // alert('Type anything...');
-    todo.value = '';
-    todo.placeholder = 'type anything...';
+    todo.value = ''; // reset todo value if user typed space
+    todo.placeholder = 'type anything...'; // change placeholder
     return;
   }
   
