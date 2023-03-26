@@ -10,6 +10,10 @@ formTodo.addEventListener('submit', (event) => {
   const todo = document.querySelector('#GET-todo');
 
   if (listOfTodo.includes(todo.value)) return;
+  if (todo.value.trim() === '') {
+    alert('Type anything...');
+    return;
+  }
   
   listOfTodo.push(todo.value.trim());
   storage(); // update the local storage
