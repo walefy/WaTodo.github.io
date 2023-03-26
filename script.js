@@ -11,10 +11,13 @@ formTodo.addEventListener('submit', (event) => {
 
   if (listOfTodo.includes(todo.value)) return;
   if (todo.value.trim() === '') {
-    alert('Type anything...');
+    // alert('Type anything...');
+    todo.placeholder = 'type anything...';
     return;
   }
   
+  todo.placeholder = '';
+
   listOfTodo.push(todo.value.trim());
   storage(); // update the local storage
   addItemInTodoElement(todo.value);
