@@ -40,6 +40,12 @@ main {
   overflow-x: auto;
 }
 
+#ul-container::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 #list-of-todo {
   list-style: none;
   padding: 10px;
