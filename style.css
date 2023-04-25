@@ -71,6 +71,10 @@ main {
   margin: none;
 }
 
+#todo-form input[type="text"]:focus {
+  outline: none;
+}
+
 /* #todo-form input[type="submit"] {
   box-sizing: border-box;
   width: 20%;

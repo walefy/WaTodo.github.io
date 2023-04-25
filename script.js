@@ -1,80 +1,86 @@
-const btnSubmit = document.querySelector('#btn-submit');
-const formTodo = document.querySelector('#todo-form');
-const listOfTodoElement = document.querySelector('#list-of-todo');
-let listOfTodo = [];
-let isFirstTime = true;
+const KEY_STORAGE_LIST = 'listItems';
 
-formTodo.addEventListener('submit', (event) => {
-  event.preventDefault();
+const saveListInLocalStorage = (list) => {
+  localStorage.setItem(KEY_STORAGE_LIST, JSON.stringify(list))
+};
 
-  const todo = document.querySelector('#GET-todo');
+const recoveryListItems = () => {
+  const listStorage = localStorage.getItem(KEY_STORAGE_LIST);
+  if (!listStorage) return [];
+  return JSON.parse(listStorage);
+};
 
-  if (listOfTodo.includes(todo.value)) return;
-  if (todo.value.trim() === '') {
-    // alert('Type anything...');
-    todo.value = ''; // reset todo value if user typed space
-    todo.placeholder = 'type anything...'; // change placeholder
-    return;
+const updateStorage = () => {
+  const taskList = [];
+  const listOfTasks = document.querySelector('#list-of-todo');
+
+  for (let index = 0; index < listOfTasks.children.length; index += 1) {
+    const listObject = {
+      text: listOfTasks.children[index].innerText,
+      completed: listOfTasks.children[index].classList.contains('completed'),
+    };
+    taskList.push(listObject);
   }
-  
-  todo.placeholder = '';
+  saveListInLocalStorage(taskList);
+};
 
-  listOfTodo.push(todo.value.trim());
-  storage(); // update the local storage
-  addItemInTodoElement(todo.value);
-  todo.value = '';
-});
-
-window.addEventListener('load', () => {
-  init();
-
-  if (isFirstTime) {
-    localStorage.setItem('listStorage', JSON.stringify([]));
-    return;
-  }
-
-  const listStorage = JSON.parse(localStorage.getItem('listStorage'));
-  listOfTodo = listOfTodo.concat(listStorage);
-
-  listOfTodo.forEach(str => {
-    addItemInTodoElement(str);
-  });
-});
-
-function storage() {
-  localStorage.setItem('listStorage',  JSON.stringify(listOfTodo));
-}
-
-function addItemInTodoElement(todo) {
-  const liId = `li-${listOfTodo.indexOf(todo)}`; // create li id
-  const checkboxId = `checkbox-${listOfTodo.indexOf(todo)}`; // create checkbox id
-  const li = document.createElement('li'); // create li element
-  const checkbox = document.createElement('input'); // create input element
-
-  li.id = liId; // set id of li element
-  li.textContent = todo; // set the text content in li element
-
-  checkbox.type = 'checkbox'; // set type of input to checkbox
-  checkbox.id = checkboxId; // set checkbox id
-  checkbox.addEventListener('change', (event) => {
-    const liElement = event.target.parentNode; // get the li element that contains the checkbox
+const addEventsInCheckbox = (checkbox) => {
+  checkbox.addEventListener('change', ({ target }) => {
+    const liElement = target.parentNode;
     liElement.classList.toggle('completed');
-    storage(); // update local storage
-
-
-    // listOfTodo.splice(listOfTodo.indexOf(liElement.textContent), 1);
+    updateStorage();
   });
+};
 
-  li.appendChild(checkbox); // append the checkbox element into li element
-  listOfTodoElement.appendChild(li); // append li element to ul element
-}
+const createCheckbox = (completed) => {
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = completed;
+  addEventsInCheckbox(checkbox);
 
-function init() {
-  if (!localStorage.getItem('isFirstTime')) {
-    localStorage.setItem('isFirstTime', 'true');
-    return; 
-  }
+  return checkbox;
+};
 
-  isFirstTime = false;
-  console.log('Não é a primeira vez');
-}
+const addTask = (task, completed) => {
+  const listOfTodo = document.querySelector('#list-of-todo');
+  const liTask = document.createElement('li');
+  liTask.textContent = task;
+
+  if (completed) liTask.classList.add('completed');
+
+  liTask.appendChild(createCheckbox(completed));
+  listOfTodo.appendChild(liTask);
+};
+
+const addEventInForm = () => {
+  const formTodo = document.querySelector('#todo-form');
+
+  formTodo.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const todo = document.querySelector('#GET-todo');
+
+    if (todo.value.trim() === '') {
+      todo.value = ''; // reset todo value if user typed space
+      todo.placeholder = 'type anything...'; // change placeholder
+      return;
+    }
+
+    todo.placeholder = '';
+    addTask(todo.value.trim());
+    updateStorage();
+    todo.value = '';
+  });
+};
+
+const addItemsInList = () => {
+  const listItems = recoveryListItems();
+
+  listItems.forEach((task) => {
+    addTask(task.text, task.completed);
+  });
+};
+
+window.onload = () => {
+  addItemsInList();
+  addEventInForm();
+};
