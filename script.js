@@ -57,13 +57,12 @@ function addItemInTodoElement(todo) {
   checkbox.type = 'checkbox'; // set type of input to checkbox
   checkbox.id = checkboxId; // set checkbox id
   checkbox.addEventListener('change', (event) => {
-    if (!event.target.checked) return; // if event is checked return
     const liElement = event.target.parentNode; // get the li element that contains the checkbox
-
-    listOfTodo.splice(listOfTodo.indexOf(liElement.textContent), 1);
+    liElement.classList.toggle('completed');
     storage(); // update local storage
 
-    listOfTodoElement.removeChild(liElement); // remove the li element of ul element
+
+    // listOfTodo.splice(listOfTodo.indexOf(liElement.textContent), 1);
   });
 
   li.appendChild(checkbox); // append the checkbox element into li element
